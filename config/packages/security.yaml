@@ -1,23 +1,30 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User: auto
+
     providers:
-        in_memory: { memory: null }
+        database_users:
+            entity: { class: App\Entity\User, property: email }
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            provider: database_users
+            pattern: ^/
             anonymous: true
+            logout:
+                path: security_logout
+            guard:
+                authenticators:
+                    - App\Security\FormLoginAuthenticator
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+        ROLE_CLIENT: ROLE_USER
+        ROLE_ADMIN: ROLE_CLIENT
+        ROLE_SUPER_ADMIN: [ROLE_CLIENT, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
