@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * Ceci sera ajouté dans tous vos fichiers PHP en entête.
+ *
+ * (c) Zozor <zozor@openclassrooms.com>
+ *
+ * A adapter et ré-utiliser selon vos besoins!
+ */
+
 namespace App\Repository;
 
 use App\Entity\User;
