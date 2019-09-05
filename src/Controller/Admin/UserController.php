@@ -22,20 +22,25 @@ class UserController extends EasyAdminController
      */
     private $encoder;
 
+    /**
+     * UserController constructor.
+     */
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
     /**
-     * @param $entity User
+     * Avant la sauvegarde du user.
+     *
+     * @param User $entity
      */
     protected function persistEntity($entity)
     {
         $entity->setEmail($entity->getUsername());
         /*
                 $url = $this->generateUrl('security_login', [],  UrlGeneratorInterface::ABSOLUTE_URL);
-        
+
                 $mail = $this->sendMail(
                     $entity->getEmail(),
                     'Nouveau compte AgendaSoft',
@@ -45,18 +50,17 @@ class UserController extends EasyAdminController
                         'url' => $url
                     ]
                 );
-        
+
                 if ($mail) {
                     $this->addFlash('success', 'Un mail a été transmi à l\'utilisateur');
                 } else {
                     $this->addFlash('danger', 'Une erreur a été rencontrée lors de l\'envois du mail');
                 }
-        
+
         */
         $password = $this->encoder->encodePassword($entity, $entity->getPassword());
         $entity->setPassword($password);
 
         parent::persistEntity($entity);
-        //parent::persistEntity($entity);
     }
 }

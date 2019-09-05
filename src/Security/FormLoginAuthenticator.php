@@ -57,10 +57,14 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $credentials['email']
-        );
+
+        $session = $request->getSession();
+        if (\is_object($session)) {
+            $session->set(
+                Security::LAST_USERNAME,
+                $credentials['email']
+            );
+        }
 
         return $credentials;
     }
@@ -89,8 +93,11 @@ class FormLoginAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+        if (\is_object($request->getSession())) {
+            $targetPath = $this->getTargetPath($request->getSession(), $providerKey);
+            if ($targetPath) {
+                return new RedirectResponse($targetPath);
+            }
         }
 
         return new RedirectResponse($this->router->generate('homepage'));
