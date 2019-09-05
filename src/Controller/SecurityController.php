@@ -33,8 +33,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
                 'last_username' => $lastUsername,
                 'error' => $error,
-            ]
-        );
+        ]);
     }
 
     /**
@@ -51,7 +50,7 @@ class SecurityController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function switch_user(Request $request, User $id)
+    public function switchUser(Request $request, User $id)
     {
         return $this->redirectToRoute('admin_dashboard', [
             '_locale' => $request->getLocale(),

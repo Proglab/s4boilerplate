@@ -8,6 +8,12 @@ call .\vendor\bin\php-cs-fixer.bat fix
 PAUSE
 
 ECHO ============================
+ECHO PHP Code Sniffer
+ECHO ============================
+call .\vendor\bin\phpcs.bat
+PAUSE
+
+ECHO ============================
 ECHO phpstan
 ECHO ============================
 ECHO ==========level 1===========
