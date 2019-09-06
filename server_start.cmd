@@ -44,11 +44,22 @@ ECHO ==========level 7===========
 call .\vendor\bin\phpstan.bat analyse .\src\Controller .\src\Entity .\src\Repository .\src\Security --level 7
 PAUSE
 
+ECHO ============================
+ECHO Php unit
+ECHO ============================
+php -v
+PAUSE
+
+ECHO ============================
+ECHO Php unit
+ECHO ============================
+call .\vendor\bin\simple-phpunit --coverage-text
+PAUSE
 
 ECHO ============================
 ECHO migration
 ECHO ============================
-# php bin/console doctrine:migrations:migrate
+php bin/console doctrine:migrations:migrate
 
 ECHO ============================
 ECHO run server
