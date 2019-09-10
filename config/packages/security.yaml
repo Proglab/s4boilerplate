@@ -11,6 +11,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            switch_user: true
             provider: database_users
             pattern: ^/
             anonymous: true
@@ -22,8 +23,8 @@ security:
 
     role_hierarchy:
         ROLE_CLIENT: ROLE_USER
-        ROLE_ADMIN: ROLE_CLIENT
-        ROLE_SUPER_ADMIN: [ROLE_CLIENT, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN: [ROLE_CLIENT, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_SUPER_ADMIN: [ROLE_CLIENT, ROLE_ADMIN]
         switch_user: true
 
     # Easy way to control access for large sections of your site
