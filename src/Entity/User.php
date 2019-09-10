@@ -113,7 +113,7 @@ class User implements UserInterface
         $this->username = $email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }

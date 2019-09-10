@@ -45,21 +45,21 @@ call .\vendor\bin\phpstan.bat analyse .\src\Controller .\src\Entity .\src\Reposi
 PAUSE
 
 ECHO ============================
-ECHO Php unit
-ECHO ============================
-php -v
-PAUSE
-
-ECHO ============================
-ECHO Php unit
-ECHO ============================
-call .\vendor\bin\simple-phpunit --coverage-text
-PAUSE
-
-ECHO ============================
 ECHO migration
 ECHO ============================
 php bin/console doctrine:migrations:migrate
+
+ECHO ============================
+ECHO Codecept
+ECHO ============================
+call .\vendor\bin\codecept.bat run --coverage --coverage-html
+PAUSE
+
+ECHO ============================
+ECHO cache clear
+ECHO ============================
+php bin/console cache:clear
+PAUSE
 
 ECHO ============================
 ECHO run server

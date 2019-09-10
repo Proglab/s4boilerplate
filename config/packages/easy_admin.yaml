@@ -1,13 +1,29 @@
 easy_admin:
+    user:
+        display_name: true
+        display_avatar: false
+        name_property_path: 'fullName'
+    list:
+        item_permission: 'ROLE_SUPER_ADMIN'
+    new:
+        item_permission: 'ROLE_SUPER_ADMIN'
+    edit:
+        item_permission: 'ROLE_SUPER_ADMIN'
+
     site_name: 'CMS<em style="font-size: 80%;">Base</em>'
     design:
         form_theme: '@EasyAdmin/form/bootstrap_4.html.twig'
+        menu:
+            - {label: 'admin.menu.admin.dashboard', icon: 'tachometer-alt', route: 'admin_dashboard' }
+            - {label: 'admin.menu.front.homepage', icon: 'home', route: 'homepage' }
+            - {entity: 'User', icon: 'user', permission: 'ROLE_ADMIN'}
     entities:
         User:
             class: App\Entity\User
             label: admin.menu.user.label
             controller: App\Controller\Admin\UserController
             list:
+                item_permission: 'ROLE_ADMIN'
                 dql_filter: "entity.roles NOT LIKE '%%ROLE_SUPER_ADMIN%%'"
                 title: 'admin.user.list'
                 fields:
@@ -15,7 +31,6 @@ easy_admin:
                     - { property: 'fullname', label: 'admin.user.list.fullname'}
                     - { property: 'active', label: 'admin.user.list.active'}
                     - { property: 'email', type: 'email', label: 'admin.user.list.email'}
-                    - { property: 'roles', label: 'admin.user.list.roles'}
                 sort: ['lastName', 'ASC']
                 actions:
                     - { name: 'switch_user', icon: 'user-secret', type: 'route', label: '', title: 'admin.user.list.switch_user'}
@@ -24,21 +39,24 @@ easy_admin:
                     - { name: 'new', label: 'admin.user.new.button'}
                     - { name: 'search', label: 'admin.user.search.button'}
             new:
+                item_permission: 'ROLE_ADMIN'
                 title:  'admin.user.new'
                 fields:
-                    - { property: 'firstName'}
-                    - { property: 'lastName'}
-                    - { property: 'email', type: 'email', label: 'Email' }
-                    - { property: 'password'}
-                    - { property: 'active', label: 'Actif ?', type: 'checkbox'}
+                    - { property: 'firstName', label: 'admin.user.new.firtname'}
+                    - { property: 'lastName', label: 'admin.user.new.lastname'}
+                    - { property: 'email', type: 'email', label: 'admin.user.new.email' }
+                    - { property: 'password', label: 'admin.user.new.password'}
+                    - { property: 'active', label: 'admin.user.new.active', type: 'checkbox'}
+                    - { property: 'roles', label: 'admin.user.new.roles', permission: 'ROLE_SUPER_ADMIN', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_CLIENT': 'ROLE_CLIENT', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN': 'ROLE_SUPER_ADMIN' } } }
             edit:
+                item_permission: 'ROLE_ADMIN'
                 title:  'admin.user.edit'
                 form:
                     fields:
                         - '-password'
                 fields:
-                    - { property: 'firstName'}
-                    - { property: 'lastName'}
-                    - { property: 'active', label: 'Actif ?', type: 'checkbox'}
-                    - { property: 'username', type: 'email', label: 'Email' }
-                    - { property: 'roles', type: choice, type_options: { expanded: true, multiple: true  }}
+                    - { property: 'firstName', label: 'admin.user.edit.firtname'}
+                    - { property: 'lastName', label: 'admin.user.edit.lastname'}
+                    - { property: 'active', label: 'admin.user.edit.active', type: 'checkbox'}
+                    - { property: 'username', type: 'email', label: 'admin.user.edit.email' }
+                    - { property: 'roles', label: 'admin.user.edit.roles', permission: 'ROLE_SUPER_ADMIN', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_CLIENT': 'ROLE_CLIENT', 'ROLE_ADMIN': 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN': 'ROLE_SUPER_ADMIN' } } }
