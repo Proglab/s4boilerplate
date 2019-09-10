@@ -62,6 +62,13 @@ php bin/console cache:clear
 PAUSE
 
 ECHO ============================
+ECHO traductions
+ECHO ============================
+php bin/console translation:update --dump-messages --force fr
+php bin/console translation:update --dump-messages --force nl
+PAUSE
+
+ECHO ============================
 ECHO run server
 ECHO ============================
 php bin/console server:run --docroot=public
